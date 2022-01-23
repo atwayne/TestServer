@@ -19,6 +19,14 @@ namespace Dubstep.TestUtilities
         /// </summary>
         public HttpClient CreateClient()
         {
+            return CreateClient(null);
+        }
+
+        /// <summary>
+        /// Generate a HttpClient instance and applies additional DelegatingHandler on this client instance
+        /// </summary>
+        public HttpClient CreateClient(DelegatingHandler handler)
+        {
             var builder = new WebHostBuilder()
                 .ConfigureServices(services =>
                 {
@@ -26,7 +34,19 @@ namespace Dubstep.TestUtilities
                 })
                 .UseStartup<Startup>();
             var testServer = new InternalTestServer(builder);
-            return testServer.CreateClient();
+            var innerHttpClient = testServer.CreateClient();
+
+            if (handler == null)
+            {
+                return innerHttpClient;
+            }
+
+            var httpMessageHandler = new HttpClientWrapHandler(innerHttpClient, handler);
+            var httpClient = new HttpClient(httpMessageHandler)
+            {
+                BaseAddress = innerHttpClient.BaseAddress
+            };
+            return httpClient;
         }
     }
 }

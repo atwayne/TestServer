@@ -276,5 +276,26 @@ namespace Dubstep.TestUtilities.Tests
             // Assert
             AssertOkResponse(actual, firstResponse);
         }
+
+        [Test]
+        public async Task WhenHaveDelegatingHandler_ShouldApplyToClient()
+        {
+            // Arrange
+            var expectedUserAgent = AddUserAgentHandler.DefaultUserAgent;
+
+            _server.CurrentRuleSet
+                .AddRule()
+                .WhenPost()
+                .WhenHeaderMatch("User-Agent", expectedUserAgent)
+                .SetOkResponse(_okResponse);
+            // AddUserAgentHandler adds http header User-Agent
+            var client = _server.CreateClient(new AddUserAgentHandler());
+
+            // Act
+            var actual = await client.PostAsync("/", new StringContent("abcd"));
+
+            // Assert
+            AssertOkResponse(actual);
+        }
     }
 }
