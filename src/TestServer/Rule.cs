@@ -12,6 +12,8 @@ namespace Dubstep.TestUtilities
         public IList<Func<HttpRequest, bool>> Predictions { get; set; }
         public Action<HttpResponse> Action { get; set; }
         public RuleSet RuleSet { get; set; }
+        public int? MaxMatchCount { get; private set; }
+        private int MatchCount { get; set; }
 
         public Rule(RuleSet ruleSet)
         {
@@ -19,21 +21,21 @@ namespace Dubstep.TestUtilities
             Predictions = new List<Func<HttpRequest, bool>>();
         }
 
-        public bool IsValid()
+        public bool IsActive()
         {
-            return Action != null;
+            if (Action == null)
+            {
+                return false;
+            }
+
+            return !MaxMatchCount.HasValue || MatchCount < MaxMatchCount;
         }
 
         /// <summary>
         /// Complete current Rule and add a new rule on parent RuleSet
         /// </summary>
-        /// <exception cref="InvalidOperationException">throws if current rule is not completed</exception>
         public Rule AddRule()
         {
-            if (!IsValid())
-            {
-                throw new InvalidOperationException("Previous rule not completed");
-            }
             return RuleSet.AddRule();
         }
 
@@ -127,6 +129,23 @@ namespace Dubstep.TestUtilities
                 await response.WriteAsync(output);
             };
             return this;
+        }
+
+        /// <summary>
+        /// Set how much request could apply to this rule
+        /// </summary>
+        public Rule SetMaxMatchCount(int? maxMatchCount)
+        {
+            MaxMatchCount = maxMatchCount;
+            return this;
+        }
+
+        /// <summary>
+        /// Increase the count this rule applies
+        /// </summary>
+        internal void SetMatchCount()
+        {
+            MatchCount++;
         }
     }
 }

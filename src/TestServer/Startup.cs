@@ -22,9 +22,15 @@ namespace Dubstep.TestUtilities
                     var matchFound = false;
                     foreach (var rule in ruleSet.Rules)
                     {
+                        if (!rule.IsActive())
+                        {
+                            continue;
+                        }
+
                         var match = rule.Predictions.All(prediction => prediction(context.Request));
                         if (match)
                         {
+                            rule.SetMatchCount();
                             await Task.Run(() =>
                             {
                                 rule.Action(context.Response);

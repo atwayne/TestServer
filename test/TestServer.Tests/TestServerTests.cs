@@ -297,5 +297,49 @@ namespace Dubstep.TestUtilities.Tests
             // Assert
             AssertOkResponse(actual);
         }
+
+        [Test]
+        public async Task WhenMaxCountReached_ShouldFail()
+        {
+            // Arrange
+            _server.CurrentRuleSet
+                .AddRule()
+                .SetMaxMatchCount(1)
+                .SetOkResponse(_okResponse);
+
+            var client = _server.CreateClient();
+
+            // Act
+            var first = await client.GetAsync("/");
+            var second = await client.GetAsync("/");
+
+            // Assert
+            AssertOkResponse(first);
+            AssertNoPredictionMatched(second);
+        }
+
+        [Test]
+        public async Task WhenFirstMatchReachedMaxCount_ShouldApplySecond()
+        {
+            // Arrange
+            var firstResponse = "first rule matched";
+            var secondResponse = "second rule matched";
+            _server.CurrentRuleSet
+                .AddRule()
+                .SetMaxMatchCount(1)
+                .SetOkResponse(firstResponse)
+                .AddRule()
+                .SetOkResponse(secondResponse);
+
+            var client = _server.CreateClient();
+
+            // Act
+            var first = await client.GetAsync("/");
+            var second = await client.GetAsync("/");
+
+            // Assert
+            AssertOkResponse(first, firstResponse);
+            AssertOkResponse(second, secondResponse);
+        }
     }
 }
