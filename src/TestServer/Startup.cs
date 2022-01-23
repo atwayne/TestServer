@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TestUtilities
+namespace Dubstep.TestUtilities
 {
     internal class Startup
     {

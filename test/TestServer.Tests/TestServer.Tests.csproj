@@ -5,9 +5,9 @@
 
     <IsPackable>false</IsPackable>
 
-    <RootNamespace>TestUtilities.Tests</RootNamespace>
+    <RootNamespace>Dubstep.TestUtilities.Tests</RootNamespace>
 
-    <AssemblyName>TestUtilities.TestServer.Tests</AssemblyName>
+    <AssemblyName>Dubstep.TestUtilities.TestServer.Tests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

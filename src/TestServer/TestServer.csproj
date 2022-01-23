@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
-		<RootNamespace>TestUtilities</RootNamespace>
+		<RootNamespace>Dubstep.TestUtilities</RootNamespace>
 		<AssemblyName>TestUtilities.TestServer</AssemblyName>
 	</PropertyGroup>
 

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using InternalTestServer = Microsoft.AspNetCore.TestHost.TestServer;
 
-namespace TestUtilities
+namespace Dubstep.TestUtilities
 {
     public class TestServer
     {

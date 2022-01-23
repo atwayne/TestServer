@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 
-namespace TestUtilities
+namespace Dubstep.TestUtilities
 {
     public class Rule
     {

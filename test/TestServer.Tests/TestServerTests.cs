@@ -4,7 +4,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace TestUtilities.Tests
+namespace Dubstep.TestUtilities.Tests
 {
     public class TestServerTests
     {

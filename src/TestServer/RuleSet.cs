@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 
-namespace TestUtilities
+namespace Dubstep.TestUtilities
 {
     public class RuleSet
     {
