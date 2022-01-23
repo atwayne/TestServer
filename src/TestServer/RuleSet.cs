@@ -7,6 +7,10 @@ namespace Dubstep.TestUtilities
     public class RuleSet
     {
         public List<Rule> Rules { get; private set; }
+        /// <summary>
+        /// The fallback action when no rule matches
+        /// By default it's a BadRequest response
+        /// </summary>
         public Action<HttpResponse> DefaultAction { get; private set; }
 
         public RuleSet()
@@ -19,6 +23,9 @@ namespace Dubstep.TestUtilities
             };
         }
 
+        /// <summary>
+        /// Create a new Rule and add it to the rule list
+        /// </summary>
         public Rule AddRule()
         {
             var rule = new Rule(this);
@@ -26,6 +33,9 @@ namespace Dubstep.TestUtilities
             return rule;
         }
 
+        /// <summary>
+        /// Set fallback action if no rule matches
+        /// </summary>
         public RuleSet SetDefaultAction(Action<HttpResponse> action)
         {
             DefaultAction = action;

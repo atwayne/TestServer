@@ -24,15 +24,22 @@ namespace Dubstep.TestUtilities
             return Action != null;
         }
 
+        /// <summary>
+        /// Complete current Rule and add a new rule on parent RuleSet
+        /// </summary>
+        /// <exception cref="InvalidOperationException">throws if current rule is not completed</exception>
         public Rule AddRule()
         {
-            if (Action == null)
+            if (!IsValid())
             {
                 throw new InvalidOperationException("Previous rule not completed");
             }
             return RuleSet.AddRule();
         }
 
+        /// <summary>
+        /// Add a rule that the HttpRequest.Method is GET
+        /// </summary>
         public Rule WhenGet()
         {
             Predictions.Add((request) =>
@@ -42,6 +49,10 @@ namespace Dubstep.TestUtilities
             return this;
         }
 
+        /// <summary>
+        /// Add a rule that the request url matches a regex expression
+        /// </summary>
+        /// <param name="pattern">a regex expression</param>
         public Rule WhenUrlMatch(string pattern)
         {
             Predictions.Add((request) =>
@@ -52,6 +63,11 @@ namespace Dubstep.TestUtilities
             return this;
         }
 
+        /// <summary>
+        /// Add a rule that a http request header has an expected value
+        /// </summary>
+        /// <param name="key">The name of the header</param>
+        /// <param name="value">The expected value</param>
         public Rule WhenHeaderMatch(string key, string value)
         {
             Predictions.Add((request) =>
@@ -65,11 +81,19 @@ namespace Dubstep.TestUtilities
             return this;
         }
 
+        /// <summary>
+        /// Add a rule that a http request has an expected Authorization header
+        /// </summary>
+        /// <param name="token">The expected Authorization header</param>
         public Rule WhenAuthorizationMatch(string token)
         {
             return WhenHeaderMatch("Authorization", token);
         }
 
+        /// <summary>
+        /// Set the action of the current rule to BadRequest
+        /// </summary>
+        /// <param name="message">Default: Bad Request</param>
         public Rule SetBadRequest(string message = "Bad Request")
         {
             Action = async response =>
@@ -80,6 +104,10 @@ namespace Dubstep.TestUtilities
             return this;
         }
 
+        /// <summary>
+        /// Set the action of the current rule to write a response
+        /// </summary>
+        /// <param name="output">The plain text of the response</param>
         public Rule SetOkResponse(string output)
         {
             Action = async response =>

@@ -14,6 +14,9 @@ namespace Dubstep.TestUtilities
             CurrentRuleSet = new RuleSet();
         }
 
+        /// <summary>
+        /// Generate a HttpClient instance
+        /// </summary>
         public HttpClient CreateClient()
         {
             var builder = new WebHostBuilder()
