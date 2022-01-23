@@ -50,6 +50,18 @@ namespace Dubstep.TestUtilities
         }
 
         /// <summary>
+        /// Add a rule that the HttpRequest.Method is POST
+        /// </summary>
+        public Rule WhenPost()
+        {
+            Predictions.Add((request) =>
+            {
+                return request.Method == "POST";
+            });
+            return this;
+        }
+
+        /// <summary>
         /// Add a rule that the request url matches a regex expression
         /// </summary>
         /// <param name="pattern">a regex expression</param>

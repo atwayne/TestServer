@@ -84,6 +84,23 @@ namespace Dubstep.TestUtilities.Tests
         }
 
         [Test]
+        public async Task WhenPredictPost_PostAsync_ShouldSucceed()
+        {
+            // Arrange
+            _server.CurrentRuleSet
+                .AddRule()
+                .WhenPost()
+                .SetOkResponse(_okResponse);
+            var client = _server.CreateClient();
+
+            // Act
+            var actual = await client.PostAsync("/", new StringContent("dummy"));
+
+            // Assert
+            AssertOkResponse(actual);
+        }
+
+        [Test]
         public async Task WhenPredictGet_PostAsync_ShouldFail()
         {
             // Arrange
