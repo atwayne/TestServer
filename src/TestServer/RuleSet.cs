@@ -19,7 +19,7 @@ namespace Dubstep.TestUtilities
             DefaultAction = async response =>
             {
                 response.StatusCode = 404;
-                await response.WriteAsync("Simons says Not Match");
+                await response.WriteAsync("Simon says Not Match");
             };
         }
 
