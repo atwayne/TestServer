@@ -4,7 +4,7 @@
 		<PackageId>Dubstep.TestUtilities.TestServer</PackageId>
 		<Authors>Wayne Wang</Authors>
 		<PackageTags>TestServer;TestUtilities;Dubstep.TestUtilities;Dubstep</PackageTags>
-		<Description>A TestServer that take rules from configuration.</Description>
+		<Description>Create a HttpClient instance with route rules that can be injected to your unit tests</Description>
 		<RepositoryUrl>https://github.com/atwayne/TestServer</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 
