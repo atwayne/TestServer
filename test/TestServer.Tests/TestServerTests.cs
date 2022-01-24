@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 
 namespace Dubstep.TestUtilities.Tests
@@ -340,6 +341,25 @@ namespace Dubstep.TestUtilities.Tests
             // Assert
             AssertOkResponse(first, firstResponse);
             AssertOkResponse(second, secondResponse);
+        }
+
+        [Test]
+        public async Task WhenSetFallbackAction_ShouldApply()
+        {
+            // Arrange
+            _server.CurrentRuleSet
+                .SetDefaultAction(async (response) =>
+                {
+                    response.StatusCode = 500;
+                    await response.WriteAsync("Simon says server");
+                });
+            var client = _server.CreateClient();
+
+            // Act
+            var actual = await client.GetAsync("/");
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.InternalServerError, actual.StatusCode);
         }
     }
 }
