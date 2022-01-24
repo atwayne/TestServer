@@ -14,10 +14,20 @@
 
 ## Example
 ```csharp
+// The default vaule when not match found is a HttpNotFound response
+// It can be changed by SetDefaultAction
+server.CurrentRuleSet
+    .SetDefaultAction(async (response) =>
+    {
+        response.StatusCode = 500;
+        await response.WriteAsync("Simon says server error");
+    });
+
 // Return OK response for every request
 server.CurrentRuleSet
     .AddRule()
     .SetOkResponse("ok");
+
 // Return Bad Request for every request
 server.CurrentRuleSet
     .AddRule()
